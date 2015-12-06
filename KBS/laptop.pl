@@ -4,7 +4,7 @@ explanation([]).
 	tambah_explanation(New) :- explanation(L1), append(L1, New, L2), retractall(explanation(L1)), asserta(explanation(L2)).
 	hapusex :- retractall(explanation(_)), asserta(explanation([])).
 	
-% penggunaan komputer oleh masing-masing pengguna
+% Penggunaan Laptop untuk masing-masing pengguna
 
 	programming(programmer).
 	
@@ -38,6 +38,21 @@ explanation([]).
 	m_mengetik_dokumen(pelajar_sma).
 	m_mengetik_dokumen(pelajar_sd).
 	m_mengetik_dokumen(anggota_dpr).
+	
+		
+% baterai laptop
+
+	battery(X,Y) :- m_battery(X, Y), atomics_to_string([X, "membutuhkan battery laptop sebesar",Y], ' ', Explanation), tambah_explanation([Explanation]).
+	m_battery(programmer, 100).
+	m_battery(anggota_dpr, 400).
+	m_battery(pelajar_smp, 50).
+	m_battery(pelajar_sma, 50).
+	m_battery(mahasiswa, 50).
+	m_battery(editor_video, 50).
+	m_battery(sekertaris, 400).
+	m_battery(pelajar_sd, 50).
+	m_battery(desainer, 50).
+	
 
 % kebutuhan komputasi berdasarkan kegiatan
 
@@ -48,10 +63,10 @@ explanation([]).
 	komputasi(X,Z) :- video(X), Z = 500, tambah_explanation(["Penggunaan untuk video editing membutuhkan komputasi sebesar 500"]).
 	komputasi(X,Z) :- mengetik_dokumen(X), Z = 10, tambah_explanation(["Penggunaan untuk mengetik dokumen membutuhkan komputasi sebesar 10"]).
 	
-% Kelas Komputer
 
-	kelas(1,X) :- hapusex, aggregate(sum(P), komputasi(X,P), Total), Total >= 1000, !, tambah_explanation(["Kelas 1 dipilih karena komputasi komputer lebih besar dari 1000"]).
-	kelas(2,X) :- hapusex, aggregate(sum(P), komputasi(X,P), Total), Total < 1000, Total >= 500, !, tambah_explanation(["Kelas 2 dipilih karena komputasi komputer diantara 500 sampai 1000"]).
-	kelas(3,X) :- hapusex, aggregate(sum(P), komputasi(X,P), Total), Total < 500, Total >= 200, !, tambah_explanation(["Kelas 3 dipilih karena komputasi komputer diantara 200 sampai 500"]).
-	kelas(4,X) :- hapusex, aggregate(sum(P), komputasi(X,P), Total), Total < 200, !, tambah_explanation(["Kelas 4 dipilih karena komputasi komputer lebih kecil dari 200"]).
-	
+% Kelas Laptop
+
+	kelas(1,X) :- hapusex, aggregate(sum(P), komputasi(X,P), K), battery(X,Y), Total = K + Y, Total >= 1000, !, tambah_explanation(["Kelas 1 dipilih karena Skor Kelas Laptop (Battery + Komputasi) lebih besar dari 1000"]).
+	kelas(2,X) :- hapusex, aggregate(sum(P), komputasi(X,P), K), battery(X,Y), Total = K + Y, Total < 1000, Total >= 500, !, tambah_explanation(["Kelas 2 dipilih karena Skor Kelas Laptop (Battery + Komputasi) diantara 500 sampai 1000"]).
+	kelas(4,X) :- hapusex, aggregate(sum(P), komputasi(X,P), K), battery(X,Y), Total = K + Y, Total < 200, !, tambah_explanation(["Kelas 4 dipilih karena Skor Kelas Laptop (Battery + Komputasi) dibawah 200"]).
+	kelas(3,X) :- hapusex, aggregate(sum(P), komputasi(X,P), K), battery(X,Y), Total = K + Y, Total < 500, Total >= 200, !, tambah_explanation(["Kelas 3 dipilih karena Skor Kelas Laptop (Battery + Komputasi) diantara 200 sampai 500"]).
