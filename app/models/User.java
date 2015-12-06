@@ -13,10 +13,41 @@ import javax.persistence.Id;
 @Entity
 public class User extends Model {
     @Id
-    public Integer id;
+    private Integer id;
 
-    public String username;
-    public String name;
-    public int role;
+    private String username;
+    private String name;
+    private int role;
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }

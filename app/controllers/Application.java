@@ -18,8 +18,9 @@ public class Application extends Controller {
     }
 
     public Result addUser() {
+        Logger.debug(Form.form().bindFromRequest().get("name"));
         User user = Form.form(User.class).bindFromRequest().get();
-        System.out.println(user.name);
+//        System.out.println(user.name);
         user.save();
         return redirect(routes.Application.index());
     }
