@@ -23,7 +23,7 @@
 	
 % Kelas Komputer
 
-	kelas(komputer,a,X) :- aggregate(sum(P), komputasi(X,P), Total), Total >= 1000.
-	kelas(komputer,b,X) :- aggregate(sum(P), komputasi(X,P), Total), Total < 1000, Total >= 500.
-	kelas(komputer,c,X) :- aggregate(sum(P), komputasi(X,P), Total), Total < 500.
+	kelas(a,X) :- aggregate(sum(P), komputasi(X,P), Total), Total >= 1000.
+	kelas(b,X) :- aggregate(sum(P), komputasi(X,P), Total), Total < 1000, Total >= 500.
+	kelas(c,X) :- aggregate(sum(P), komputasi(X,P), Total), Total < 500.
 	
